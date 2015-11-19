@@ -1,0 +1,11 @@
+<form action="<%=users_url%>" method="POST">
+  <input
+    type="hidden"
+    name="authenticity_token"
+    value="<%= form_authenticity_token %>">
+  <label for="user_username">Enter your desired user name:</label>
+  <input type="text" name="user[user_name]" id="user_username" />
+  <label for="user_password">Enter your desired password (minimum of 6 chars):</label>
+  <input type="password" name="user[password]" id="user_password" />
+  <input type="submit" value="Put this into the DB">
+</form>

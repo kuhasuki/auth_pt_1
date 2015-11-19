@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NinetyNineCatsDay1</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <h1>Webshare eProSpace Agile Enterprise Edition v0.125</h1>
+  <a href="/" style="color:blue; opacity:0.2;">return to index</a>
+  <div><% if current_user %>
+    You are currently logged in as <%= current_user.user_name %>, thank you for you patronage!
+    <br>
+    <%= link_to "logout", {:controller=> "sessions", :action=> "destroy"}, :method => :delete%>
+
+    <% else %>
+    <a href="/session/new">Login</a>
+    <% end %></div>
+
+<% if flash.any? %>
+  <% flash.each do |key, value| %>
+    <div class="alert alert-<%= key %>"><%= value %></div>
+  <% end %>
+<% end %>
+
+<%= yield %>
+
+</body>
+</html>
