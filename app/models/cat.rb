@@ -5,6 +5,8 @@ class Cat < ActiveRecord::Base
 
   CAT_COLORS = %w(black white orange brown)
 
+  belongs_to :owner, primary_key: :id, foreign_key: :user_id, class_name: "User"
+
   has_many(
     :rental_requests,
     class_name: "CatRentalRequest",
@@ -16,6 +18,7 @@ class Cat < ActiveRecord::Base
     :color,
     :name,
     :sex,
+    :user_id,
     presence: true
   )
 

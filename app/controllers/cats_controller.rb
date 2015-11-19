@@ -1,4 +1,6 @@
 class CatsController < ApplicationController
+
+  before_action :my_cat?, only: [:edit, :update]
   def index
     @cats = Cat.all
     render :index
@@ -10,12 +12,20 @@ class CatsController < ApplicationController
   end
 
   def new
-    @cat = Cat.new
-    render :new
+    if logged_in?
+      @cat = Cat.new
+      render :new
+    else
+      flash[:shitbox] = "You gotta be logged in to make cats, baby"
+      redirect_to new_session_url
+    end
   end
 
   def create
-    @cat = Cat.new(cat_params)
+    intermediate_params = cat_params
+    intermediate_params[:user_id] = current_user.id
+
+    @cat = Cat.new(intermediate_params)
     if @cat.save
       redirect_to cat_url(@cat)
     else
@@ -37,6 +47,11 @@ class CatsController < ApplicationController
       flash.now[:errors] = @cat.errors.full_messages
       render :edit
     end
+  end
+
+  def my_cat?
+    @cat = Cat.find(params[:id])
+    redirect_to cats_url if current_user != @cat.owner
   end
 
   private

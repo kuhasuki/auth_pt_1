@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6, allow_nil: true }
   after_initialize :ensure_session_token
 
+  has_many :cats
+
   def self.find_by_credentials(user_name, password)
     user = User.find_by(user_name: user_name)
 
